@@ -104,7 +104,7 @@ int main(void) {
         } else {
             // if parent process
             if (bgrnd == 0) {
-                waitpid(pid);
+                waitpid(pid, NULL, 0);
             }
         }
     }
