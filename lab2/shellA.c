@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #define MAXLINE 80 /* 80 chars per line, per command, should be enough. */
@@ -90,24 +92,20 @@ int main(void) {
          (3) If bgrnd == 0, the parent will wait,
                 o/w continues. */
 
+        pid_t pid;
         pid = fork();
         if (pid < 0) {
             // if fork failed
-            printf(stderr, "Fork failed");
+            fprintf(stderr, "Fork failed");
             exit(-1);
-        }
-        else if (pid == 0) {
+        } else if (pid == 0) {
             // if child process
             execvp(args[0], args);
-        }
-        else {
+        } else {
             // if parent process
             if (bgrnd == 0) {
                 waitpid(pid);
             }
-
         }
-
-
     }
 }
