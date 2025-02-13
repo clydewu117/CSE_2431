@@ -95,15 +95,20 @@ int main(void) {
         pid_t pid;
         pid = fork();
         if (pid < 0) {
-            // if fork failed
-            fprintf(stderr, "Fork failed");
+            /* if fork failed */
+            fprintf(stderr, "Fork failed\n");
             exit(-1);
         } else if (pid == 0) {
-            // if child process
-            execvp(args[0], args);
+            /* if child process */
+            if (execvp(args[0], args) == -1) {
+                /* if exec failed, print error */
+                fprintf(stderr, "Exec failed\n");
+                exit(-1);
+            }
         } else {
-            // if parent process
+            /* if parent process */
             if (bgrnd == 0) {
+                /* if parent does not run in background, wait for child */
                 waitpid(pid, NULL, 0);
             }
         }
