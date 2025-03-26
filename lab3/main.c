@@ -370,8 +370,8 @@ void roundRobinCPUScheduler(struct processControlBlock proc[], int quantum) {
 }
 
 void cpuScheduler(struct processControlBlock processes[]) {
-    // fifoCPUScheduler(processes);
-    roundRobinCPUScheduler(processes, QUANTUM);
+    fifoCPUScheduler(processes);
+    // roundRobinCPUScheduler(processes, QUANTUM);
 }
 
 int main(void) {
