@@ -322,8 +322,7 @@ void sjfCPUScheduler(struct processControlBlock proc[]) {
     }
 
     // execute processes in SJF order
-    int i;
-    for (i = 0; i < NUM_PROCESSES; i++) {
+    for (int i = 0; i < NUM_PROCESSES; i++) {
         printf("\nProcess %d runs %d instructions\n", i, proc[i].cpuBurst);
         simulateBurst(&proc[i], proc[i].cpuBurst);
     }
@@ -358,8 +357,7 @@ void roundRobinCPUScheduler(struct processControlBlock proc[], int quantum) {
                 }
 
                 // execute current process based on assigned time
-                printf("\nProcess %d runs %d instructions\n", proc[i].procID,
-                       exec_time);
+                printf("\nProcess %d runs %d instructions\n", i, exec_time);
                 simulateBurst(&proc[i], exec_time);
 
                 // deduct executed time from remaining time
