@@ -89,8 +89,8 @@ short altPageReplacement(struct processControlBlock* process) {
 }
 
 short selectVictim(struct processControlBlock* process) {
-    // return lruPageReplacement(process);
-    return altPageReplacement(process);
+    return lruPageReplacement(process);
+    // return altPageReplacement(process);
 }
 
 void loadPage(int pid, short page, short frame) {
