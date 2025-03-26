@@ -66,7 +66,9 @@ short lruPageReplacement(struct processControlBlock* process) {
     struct memoryMetaData* victim = temp;
 
     while (temp != NULL) {
+        // traverse the entire linked list to find the earliest timestamp
         if (timercmp(&temp->tv, &victim->tv, <)) {
+            // replace the victim with the least recently used page
             victim = temp;
         }
         temp = temp->next;
@@ -83,14 +85,15 @@ short altPageReplacement(struct processControlBlock* process) {
     The one implemented here should use fifo, a counting algorithm, or
     a different LRU algorithm, but not optimal.  */
     short frame;
+    // FIFO
     frame = process->myFrames->frameNumber;
 
     return frame; /*whichever frame was accessed is longest ago */
 }
 
 short selectVictim(struct processControlBlock* process) {
-    return lruPageReplacement(process);
-    // return altPageReplacement(process);
+    // return lruPageReplacement(process);
+    return altPageReplacement(process);
 }
 
 void loadPage(int pid, short page, short frame) {
