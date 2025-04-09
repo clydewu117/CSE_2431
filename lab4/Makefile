@@ -1,4 +1,4 @@
-all: createThreads parallel1 parallel2 parallel3
+all: createThreads parallel1 parallel2 parallel3 sequential
 
 createThreads: createThreads.c
 	gcc -o createThreads createThreads.c -pthread

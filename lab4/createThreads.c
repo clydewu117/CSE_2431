@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #define THREAD_NO 10
 
 void *mythread(void *arg) {
