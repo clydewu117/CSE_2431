@@ -4,16 +4,16 @@
 
 int sum = 0;
 
-int main(){
+int main() {
     int num[ARRAY_SIZE];
     srand(100);
 
-    for(int i=0; i< ARRAY_SIZE; i++){
+    for (int i = 0; i < ARRAY_SIZE; i++) {
         num[i] = rand() % 100;
     }
 
-    for(int i=0; i<ARRAY_SIZE; i++){
-	sum += num[i];
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        sum += num[i];
     }
 
     printf("sum = %d\n", sum);
