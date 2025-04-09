@@ -7,8 +7,11 @@
 int sum = 0;
 pthread_mutex_t lock;
 
+void *runner(void *param);
+
 int main() {
     int num[THREAD_NO][ARRAY_SIZE / THREAD_NO];
+    pthread_t tid[THREAD_NO];
 
     srand(100);
     // initialize arrays
