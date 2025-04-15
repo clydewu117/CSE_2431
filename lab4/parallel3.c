@@ -21,30 +21,34 @@ int main() {
         }
     }
 
-    pthread_mutex_init(&lock, NULL);
+    pthread_mutex_init(&lock, NULL);  // initialize mutex
 
+    // create threads, passing each its own subarray
     for (int i = 0; i < THREAD_NO; i++) {
         int *local_arr = num[i];
         pthread_create(&tid[i], NULL, runner, (void *)local_arr);
     }
 
+    // wait for threads to finish
     for (int i = 0; i < THREAD_NO; i++) {
         pthread_join(tid[i], NULL);
     }
 
-    pthread_mutex_destroy(&lock);
+    pthread_mutex_destroy(&lock);  // close mutex
 
     printf("sum = %d\n", sum);
     return 0;
 }
 
+// each thread sums locally, then locks once to add to global sum
 void *runner(void *param) {
     int *local_arr = (int *)param;
-    int local_sum = 0;
+    int local_sum = 0;  // store local sum
     for (int i = 0; i < ARRAY_SIZE / THREAD_NO; i++) {
         local_sum += local_arr[i];
     }
 
+    // lock only once to update shared result
     pthread_mutex_lock(&lock);
     sum += local_sum;
     pthread_mutex_unlock(&lock);

@@ -5,7 +5,7 @@
 #define THREAD_NO 10
 
 int sum = 0;
-pthread_mutex_t lock;
+pthread_mutex_t lock;  // mutex to protect shared variable
 
 void *runner(void *param);
 
@@ -21,29 +21,32 @@ int main() {
         }
     }
 
-    pthread_mutex_init(&lock, NULL);
+    pthread_mutex_init(&lock, NULL);  // initialize mutex
 
+    // create threads, passing each its own subarray
     for (int i = 0; i < THREAD_NO; i++) {
         int *local_arr = num[i];
         pthread_create(&tid[i], NULL, runner, (void *)local_arr);
     }
 
+    // wait for threads to finish
     for (int i = 0; i < THREAD_NO; i++) {
         pthread_join(tid[i], NULL);
     }
 
-    pthread_mutex_destroy(&lock);
+    pthread_mutex_destroy(&lock);  // close mutex
 
     printf("sum = %d\n", sum);
     return 0;
 }
 
+// lock is used on every addition
 void *runner(void *param) {
     int *local_arr = (int *)param;
     for (int i = 0; i < ARRAY_SIZE / THREAD_NO; i++) {
-        pthread_mutex_lock(&lock);
+        pthread_mutex_lock(&lock);  // activate lock at each addition
         sum += local_arr[i];
-        pthread_mutex_unlock(&lock);
+        pthread_mutex_unlock(&lock);  // deactivate lock after each addition
     }
     pthread_exit(NULL);
 }

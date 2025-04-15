@@ -20,11 +20,13 @@ int main() {
         }
     }
 
+    // create threads, passing each its own subarray
     for (int i = 0; i < THREAD_NO; i++) {
         int *local_arr = num[i];
         pthread_create(&tid[i], NULL, runner, (void *)local_arr);
     }
 
+    // wait for threads to finish
     for (int i = 0; i < THREAD_NO; i++) {
         pthread_join(tid[i], NULL);
     }
@@ -33,10 +35,11 @@ int main() {
     return 0;
 }
 
+// each thread adds its subarray to the shared sum (no lock)
 void *runner(void *param) {
     int *local_arr = (int *)param;
     for (int i = 0; i < ARRAY_SIZE / THREAD_NO; i++) {
-        sum += local_arr[i];
+        sum += local_arr[i];  // no synchronization
     }
     pthread_exit(NULL);
 }
